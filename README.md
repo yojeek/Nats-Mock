@@ -18,7 +18,7 @@ const options = {
 
 const mock = new NatsMock(options);
 ```
-or attach to created Tasu instance
+or attach to existed Tasu instance
 
 ```js
 const Nats = require('tasu');
@@ -31,6 +31,7 @@ const options = {
     group: 'natsMock',
     requestTimeout: 100,
 };
+
 const nats=new Nats(options);
 const mock = new NatsMock(nats);
 ```
@@ -40,7 +41,7 @@ ensure that it's connected to NATS server
 await mock.connected();
 ```
 
-set up one time mock
+set up onetime mock
 ```js
 const onceMock = mock.once('mockTest.once')
         .req({a: 1, b: 2})
@@ -84,3 +85,19 @@ Return result
 ```js
         .res({result: true, value: 'some value'});
 ```
+
+Checking result
+===============
+
+```js
+assert.isOk(onceMock.isDone());
+```
+
+```js
+assert.equal(persistMock.numOfCalls(), 2);
+```
+
+Other
+===============
+
+if you have other questions: @see `tests.js`
