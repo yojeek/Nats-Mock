@@ -84,7 +84,7 @@ class SigleMock {
         return this._numOfCalls;
     }
 
-    numOfCalls() {
+    get numOfCalls() {
         return this._numOfCalls;
     }
 

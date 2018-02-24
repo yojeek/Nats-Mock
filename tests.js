@@ -12,7 +12,6 @@ const options = {
 };
 const nats=new Nats(options);
 
-
 describe('Testing constructors', async () => {
     let mock;
 
@@ -64,7 +63,6 @@ describe('Testing ONCE', async () => {
         onceMock = mock.once('mockTest.once')
                 .req({a: 1, b: 2})
                 .res({result: true});
-
     });
 
     after(async () => {
@@ -105,14 +103,14 @@ describe('Testing PERSIST', async () => {
         const result=await nats.request('mockTest.persistMock', {a: 1, b: 2});
         assert.isOk(persistMock.isDone());
         assert.isOk(result);
-        assert.equal(persistMock.numOfCalls(), 1);
+        assert.equal(persistMock.numOfCalls, 1);
     });
 
     it('should PASS (even mock is already triggered)', async () => {
         const result=await nats.request('mockTest.persistMock', {a: 1, b: 2})
                 .catch(err => console.error(err));
         assert.isOk(result);
-        assert.equal(persistMock.numOfCalls(), 2);
+        assert.equal(persistMock.numOfCalls, 2);
     });
 });
 

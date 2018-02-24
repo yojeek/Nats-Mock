@@ -94,7 +94,7 @@ assert.isOk(onceMock.isDone());
 ```
 
 ```js
-assert.equal(persistMock.numOfCalls(), 2);
+assert.equal(persistMock.numOfCalls, 2);
 ```
 
 Other
