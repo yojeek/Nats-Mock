@@ -3,7 +3,7 @@
 Usage
 =====
 
-Create an instance Mock:
+Create an instance of Mock:
 
 ```js
 const NatsMock = require('./');
