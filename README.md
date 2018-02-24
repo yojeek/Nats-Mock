@@ -18,7 +18,7 @@ const options = {
 
 const mock = new NatsMock(options);
 ```
-or attach to existed Tasu instance
+or attach to existed [Tasu](https://github.com/yentsun/tasu/) instance
 
 ```js
 const Nats = require('tasu');
