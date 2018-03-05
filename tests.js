@@ -1,5 +1,6 @@
 const {assert} = require('chai');
 const Nats = require('tasu');
+const _ = require('lodash');
 
 const NatsMock = require('./');
 
@@ -79,6 +80,25 @@ describe('Testing ONCE', async () => {
         const result=await nats.request('mockTest.once', {a: 1, b: 2})
                 .catch(err => console.error(err));
         assert.isNotOk(result);
+    });
+
+    it('should WORK without req', async () => {
+        onceMock = mock.once('mockTest.once');
+
+        const result=await nats.request('mockTest.once', {a: 1, b: 2})
+                .catch(err => console.error(err));
+        assert.isOk(result);
+    });
+
+    it('should WORK without req', async () => {
+        const resp={a:1};
+        onceMock = mock.once('mockTest.once')
+                .res(resp);
+
+        const result=await nats.request('mockTest.once', {a: 1, b: 2})
+                .catch(err => console.error(err));
+        assert.isOk(result);
+        assert.isOk(_.isEqual(result, resp));
     });
 
 });

@@ -45,6 +45,14 @@ class SigleMock {
         this._numOfCalls = 0;
         this._persist = isPersist;
         this._subsId = tasu.listen(topic, natsMw(this._callback.bind(this)));
+
+        // defaults if one of req() or res() omitted
+        this._checkRequest = () => true;
+        this._response = {};
+    }
+
+    get numOfCalls() {
+        return this._numOfCalls;
     }
 
     req(bodyOrFunction) {
@@ -81,10 +89,6 @@ class SigleMock {
     }
 
     isDone() {
-        return this._numOfCalls;
-    }
-
-    get numOfCalls() {
         return this._numOfCalls;
     }
 
