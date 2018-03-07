@@ -80,7 +80,7 @@ class SigleMock {
         }
 
         this._numOfCalls += 1;
-        const result = await this._checkRequest(req);
+        const result = await this._checkRequest(typeof req === 'string' && JSON.parse(req));
         if (result) {
             return this._response;
         } else {
