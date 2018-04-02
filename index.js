@@ -8,7 +8,9 @@ module.exports = class NatsMock {
      * @param {Object} options - Tasu instance or NATS options
      */
     constructor(options) {
-        if (options instanceof Tasu) {
+
+        // options is instance of nats
+        if (options.hasOwnProperty('_nats')) {
             this._tasu = options;
         } else {
             this._tasu = new Tasu(options);
