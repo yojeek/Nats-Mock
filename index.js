@@ -23,13 +23,13 @@ module.exports = class NatsMock {
     }
 
     once(topic) {
-        const mock = new SigleMock(this._tasu, topic, false);
+        const mock = new RequestMock(this._tasu, topic, false);
         this._mocks.push(mock);
         return mock;
     }
 
     persist(topic) {
-        const mock = new SigleMock(this._tasu, topic, true);
+        const mock = new RequestMock(this._tasu, topic, true);
         this._mocks.push(mock);
         return mock;
     }
@@ -41,7 +41,7 @@ module.exports = class NatsMock {
 
 };
 
-class SigleMock {
+class RequestMock {
     constructor(tasu, topic, isPersist) {
         this._tasu = tasu;
         this._numOfCalls = 0;
@@ -62,7 +62,7 @@ class SigleMock {
             this._checkRequest = bodyOrFunction;
         } else {
             this._checkRequest = (req) => {
-                return _.isEqual(req, bodyOrFunction);
+                return _.isMatch(req, bodyOrFunction);
             };
         }
         return this;
@@ -82,11 +82,12 @@ class SigleMock {
         }
 
         this._numOfCalls += 1;
-        const result = await this._checkRequest(typeof req === 'string' ? JSON.parse(req) : req);
+        const payload = typeof req === 'string' ? JSON.parse(req) : req
+        const result = await this._checkRequest(payload);
         if (result) {
             return this._response;
         } else {
-            throw new Error('NatsMock. Request expectaion failed!');
+            throw new Error(`Request expectation failed : ${JSON.stringify(payload)}`);
         }
     }
 
