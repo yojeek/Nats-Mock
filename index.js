@@ -46,7 +46,7 @@ class SigleMock {
         this._tasu = tasu;
         this._numOfCalls = 0;
         this._persist = isPersist;
-        this._subsId = tasu.listen(topic, natsMw(this._callback.bind(this)));
+        this._subsId = tasu.listen(topic, this._callback.bind(this));
 
         // defaults if one of req() or res() omitted
         this._checkRequest = () => true;
@@ -98,20 +98,5 @@ class SigleMock {
         if (this._subsId) {
             this._tasu.unsubscribe(this._subsId);
         }
-    }
-}
-
-function natsMw(fn) {
-    return function (data, done) {
-        if (Object.getPrototypeOf(fn).constructor.name !==
-            'AsyncFunction') {
-            throw new Error('natsMw should be used on async functions');
-        }
-        fn(data, done).then(val => {
-            done(null, val === undefined ? null : val);
-        }).catch(err => {
-            console.error(err);
-            done(err);
-        });
     }
 }
