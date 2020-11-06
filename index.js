@@ -82,7 +82,14 @@ class RequestMock {
         }
 
         this._numOfCalls += 1;
-        const payload = typeof req === 'string' ? JSON.parse(req) : req
+        let payload
+
+        try {
+            payload = typeof req === 'string' ? JSON.parse(req) : req
+        } catch (e) {
+            payload = req
+        }
+
         const result = await this._checkRequest(payload);
         if (result) {
             return this._response;
